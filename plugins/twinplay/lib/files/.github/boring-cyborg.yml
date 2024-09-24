@@ -1,0 +1,24 @@
+labelPRBasedOnFilePath:
+  ci:
+    - .github/*
+    - .github/**/*
+    - scripts/*
+    - scripts/**/*
+    - .pre-commit-config.yaml
+    - Makefile
+
+  deps:
+    - requirements.txt
+    - requirements/*
+
+  docker:
+    - Dockerfile*
+    - docker-compose*.yml
+
+verifyTitles:
+  titleRegexp: ^(feat|feat!|fix|fix!|docs|refactor|refactor!|test|chore|build)\((ci|docs|deps|deps-dev|infrastructure|app)\):.*
+  alwaysUsePrTitle: true
+  validateEitherPrOrSingleCommitTitle: true
+  statusTitle: "Title Validator"
+  successMessage: "Validation successful!"
+  failureMessage: "Wrong ${type} title: ${title}"

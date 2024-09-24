@@ -1,0 +1,4 @@
+devbox.lock
+requirements/
+devbox.d/
+.env

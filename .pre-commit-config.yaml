@@ -1,0 +1,43 @@
+default_language_version:
+  python: python3
+
+default_stages: [commit, push]
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-yaml
+      - id: debug-statements
+      - id: requirements-txt-fixer
+
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3.10
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--filter-files"]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-typing-imports==1.12.0]
+        args:
+          - "--max-line-length=120"
+          - "--max-complexity=30"
+          - "--select=B,C,E,F,W,T4,B9"
+          - "--ignore=E203,E266,E501,W503,F403,E402,F541,C901,W504,F405" # @TODO: Remove this line after fixing all the issues about requirements MacOS

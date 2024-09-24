@@ -1,0 +1,16 @@
+{
+  "name": "terraform",
+  "version": "0.1.0",
+  "description": "Devbox plugin for Terraform",
+  "packages": ["terraform@1.9.5"],
+  "env": {
+    "PLUGIN_TERRAFORM_NAME": "Terraform",
+    "PLUGIN_TERRAFORM_DIR": "{{ .Virtenv }}"
+  },
+  "create_files": {},
+  "shell": {
+    "init_hook": ["echo \"[INFO] (plugin) ${PLUGIN_TERRAFORM_NAME} init\""],
+    "scripts": {}
+  },
+  "include": []
+}

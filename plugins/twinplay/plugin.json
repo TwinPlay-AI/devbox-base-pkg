@@ -1,0 +1,46 @@
+{
+  "name": "twinplay",
+  "version": "0.1.0",
+  "description": "Devbox plugin for Twinplay projects",
+  "packages": ["python@3.10", "doppler@3.69.0"],
+  "env": {
+    "PLUGIN_TWINPLAY_NAME": "Twinplay",
+    "PLUGIN_TWINPLAY_DIR": "{{ .Virtenv }}"
+  },
+  "create_files": {
+    "{{ .Virtenv }}/files/.pre-commit-config.yaml": "lib/files/.pre-commit-config.yaml",
+    "{{ .Virtenv }}/files/.activate": "lib/files/.activate",
+    "{{ .Virtenv }}/files/CODE_OF_CONDUCT.md": "lib/files/CODE_OF_CONDUCT.md",
+    "{{ .Virtenv }}/files/CONTRIBUTING.md": "lib/files/CONTRIBUTING.md",
+    "{{ .Virtenv }}/files/.github/PULL_REQUEST_TEMPLATE.md": "lib/files/.github/PULL_REQUEST_TEMPLATE.md",
+    "{{ .Virtenv }}/files/.github/ISSUE_TEMPLATE/BUG_REPORT.yml": "lib/files/.github/ISSUE_TEMPLATE/BUG_REPORT.yml",
+    "{{ .Virtenv }}/files/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.yml": "lib/files/.github/ISSUE_TEMPLATE/FEATURE_REQUEST.yml",
+    "{{ .Virtenv }}/files/.github/ISSUE_TEMPLATE/QUESTION.yml": "lib/files/.github/ISSUE_TEMPLATE/QUESTION.yml",
+    "{{ .Virtenv }}/files/.github/dependabot.yml": "lib/files/.github/dependabot.yml",
+    "{{ .Virtenv }}/files/.github/boring-cyborg.yml": "lib/files/.github/boring-cyborg.yml",
+    "{{ .Virtenv }}/twinplay.requirements.txt": "lib/twinplay.requirements.txt",
+    "{{ .Virtenv }}/scripts/setup.sh": "lib/scripts/setup.sh",
+    "{{ .Virtenv }}/scripts/doppler.sh": "lib/scripts/doppler.sh",
+    "{{ .Virtenv }}/scripts/deps.base.sh": "lib/scripts/deps.base.sh",
+    "{{ .Virtenv }}/conf/deps.sh": "lib/conf/deps.sh"
+  },
+  "shell": {
+    "init_hook": [
+      "echo \"[INFO] (plugin) ${PLUGIN_TWINPLAY_NAME} init\"",
+      "chmod +x ${PLUGIN_TWINPLAY_DIR}/scripts/*.sh",
+      "${PLUGIN_TWINPLAY_DIR}/scripts/setup.sh",
+      "chmod +x ${DEVBOX_CONFIG_DIR}/**/*.sh",
+      "source ${DEVBOX_PROJECT_ROOT}/.activate",
+      "devbox run deps-install"
+    ],
+    "scripts": {
+      "activate": ["source ${DEVBOX_PROJECT_ROOT}/.activate"],
+      "setup": ["${PLUGIN_TWINPLAY_DIR}/scripts/setup.sh ${@}"],
+      "doppler": ["${PLUGIN_TWINPLAY_DIR}/scripts/doppler.sh ${@}"],
+      "deps-install-base": ["${PLUGIN_TWINPLAY_DIR}/scripts/deps.base.sh ${@}"],
+      "deps-install": ["${DEVBOX_CONFIG_DIR}/twinplay/deps.sh ${@}"],
+      "lint": ["pre-commit run --all-files"]
+    }
+  },
+  "include": []
+}
