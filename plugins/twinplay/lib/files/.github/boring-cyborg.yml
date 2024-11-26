@@ -16,7 +16,7 @@ labelPRBasedOnFilePath:
     - docker-compose*.yml
 
 verifyTitles:
-  titleRegexp: ^(feat|feat!|fix|fix!|docs|refactor|refactor!|test|chore|build)\((ci|docs|deps|deps-dev|infrastructure|app)\):.*
+  titleRegexp: ^(feat|feat!|fix|fix!|docs|refactor|refactor!|test|chore|build)\((ci|docs|deps|deps-dev|infrastructure|app|main)\):.*
   alwaysUsePrTitle: true
   validateEitherPrOrSingleCommitTitle: true
   statusTitle: "Title Validator"

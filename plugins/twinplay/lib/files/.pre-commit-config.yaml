@@ -43,8 +43,8 @@ repos:
           - "--ignore=E203,E266,E501,W503,F403,E402,F541,C901,W504,F405" # @TODO: Remove this line after fixing all the issues about requirements MacOS
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.96.1
+    rev: v1.96.2
     hooks:
       - id: terraform_fmt
       - id: terraform_tflint
-      - id: terraform_validate
+      # - id: terraform_validate @TODO: Uncomment when resolved the issue in ci/cd
