@@ -5,12 +5,24 @@
   "packages": ["terraform@1.9.5"],
   "env": {
     "PLUGIN_TERRAFORM_NAME": "Terraform",
-    "PLUGIN_TERRAFORM_DIR": "{{ .Virtenv }}"
+    "PLUGIN_TERRAFORM_DIR": "{{ .Virtenv }}",
+    "INFRASTRUCTURE_PATH": "${DEVBOX_PROJECT_ROOT}/infrastructure"
   },
-  "create_files": {},
+  "create_files": {
+    "{{ .Virtenv }}/files/Makefile": "lib/files/Makefile",
+    "{{ .Virtenv }}/scripts/setup.sh": "lib/scripts/setup.sh"
+  },
   "shell": {
-    "init_hook": ["echo \"[INFO] (plugin) ${PLUGIN_TERRAFORM_NAME} init\""],
-    "scripts": {}
+    "init_hook": [
+      "echo \"[INFO] (plugin) ${PLUGIN_TERRAFORM_NAME} init\"",
+      "chmod +x ${PLUGIN_TERRAFORM_DIR}/scripts/*.sh",
+      "${PLUGIN_TERRAFORM_DIR}/scripts/setup.sh"
+    ],
+    "scripts": {
+      "infra:cmd": ["cd ${INFRASTRUCTURE_PATH} && make $@ ; cd -"],
+      "infra:plan": ["devbox run infra:cmd plan args=\"$@\""],
+      "infra:apply": ["devbox run infra:cmd apply args=\"$@\""]
+    }
   },
   "include": []
 }
