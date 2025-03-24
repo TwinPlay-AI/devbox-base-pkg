@@ -31,15 +31,17 @@
       "${PLUGIN_TWINPLAY_DIR}/scripts/setup.sh",
       "chmod +x ${DEVBOX_CONFIG_DIR}/**/*.sh",
       "source ${DEVBOX_PROJECT_ROOT}/.activate",
-      "devbox run deps-install"
+      "devbox run tp:deps:install"
     ],
     "scripts": {
-      "activate": ["source ${DEVBOX_PROJECT_ROOT}/.activate"],
-      "setup": ["${PLUGIN_TWINPLAY_DIR}/scripts/setup.sh ${@}"],
-      "doppler": ["${PLUGIN_TWINPLAY_DIR}/scripts/doppler.sh ${@}"],
-      "deps-install-base": ["${PLUGIN_TWINPLAY_DIR}/scripts/deps.base.sh ${@}"],
-      "deps-install": ["${DEVBOX_CONFIG_DIR}/twinplay/deps.sh ${@}"],
-      "lint": ["pre-commit run --all-files"]
+      "tp:activate": ["source ${DEVBOX_PROJECT_ROOT}/.activate"],
+      "tp:setup": ["${PLUGIN_TWINPLAY_DIR}/scripts/setup.sh ${@}"],
+      "tp:doppler": ["${PLUGIN_TWINPLAY_DIR}/scripts/doppler.sh ${@}"],
+      "tp:deps:install-base": [
+        "${PLUGIN_TWINPLAY_DIR}/scripts/deps.base.sh ${@}"
+      ],
+      "tp:deps:install": ["${DEVBOX_CONFIG_DIR}/twinplay/deps.sh ${@}"],
+      "tp:lint": ["pre-commit run --all-files"]
     }
   },
   "include": []

@@ -25,7 +25,4 @@ apply-auto-approve: select-workspace ## Execute terraform plan
 check-drift: ## Check for drift. This will change the meaning of exit codes to: 0 - Succeeded (no changes), 1 - Errored, 2 - Succeeded, there is a diff
 	terraform plan $(call args,defaultstring) -var-file=env/$(workspace).tfvars -detailed-exitcode -lock=false
 
-run-build-ami-pipeline: ## Run the AMI pipeline
-	./scripts/run-build-ami-pipeline.sh
-
 include Makefile.project

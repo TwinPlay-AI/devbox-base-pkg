@@ -11,7 +11,7 @@ trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 set -o pipefail
 
 main(){
-  devbox run deps-install-base
+  devbox run tp:deps:install-base
 
   echo "[INFO] Installing project dependencies"
 }

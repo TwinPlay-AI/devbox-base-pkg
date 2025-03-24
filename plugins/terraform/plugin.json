@@ -19,9 +19,10 @@
       "${PLUGIN_TERRAFORM_DIR}/scripts/setup.sh"
     ],
     "scripts": {
-      "infra:cmd": ["cd ${INFRASTRUCTURE_PATH} && make $@ ; cd -"],
-      "infra:plan": ["devbox run infra:cmd plan args=\"$@\""],
-      "infra:apply": ["devbox run infra:cmd apply args=\"$@\""]
+      "tf:cmd": ["cd ${INFRASTRUCTURE_PATH} && make $@ ; cd -"],
+      "tf:plan": ["devbox run tf:cmd plan args=\"$@\""],
+      "tf:apply": ["devbox run tf:cmd apply args=\"$@\""],
+      "tf:checkov": ["checkov -f Dockerfile --quiet"]
     }
   },
   "include": []

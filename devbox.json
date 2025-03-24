@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.12.0/.schema/devbox.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.0/.schema/devbox.schema.json",
   "packages": [],
   "env": {
     "DEBUG": "true"
@@ -10,9 +10,11 @@
       "clean": [
         "rm -Rf ${DEVBOX_PROJECT_ROOT}/devbox.d",
         "rm -Rf ${DEVBOX_PROJECT_ROOT}/requirements",
+        "rm -Rf ${DEVBOX_PROJECT_ROOT}/infrastructure",
         "rm -Rf ${DEVBOX_PROJECT_ROOT}/.github",
         "rm -f ${DEVBOX_PROJECT_ROOT}/.env",
-        "rm -f ${DEVBOX_PROJECT_ROOT}/.activate"
+        "rm -f ${DEVBOX_PROJECT_ROOT}/.activate",
+        "rm -f ${DEVBOX_PROJECT_ROOT}/devbox.lock"
       ]
     }
   },
