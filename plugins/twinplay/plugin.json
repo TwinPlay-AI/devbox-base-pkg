@@ -2,7 +2,7 @@
   "name": "twinplay",
   "version": "0.1.0",
   "description": "Devbox plugin for Twinplay projects",
-  "packages": ["python@3.10", "doppler@3.69.0"],
+  "packages": ["python@3.10", "doppler@3.69.0", "awscli2@latest"],
   "env": {
     "PLUGIN_TWINPLAY_NAME": "Twinplay",
     "PLUGIN_TWINPLAY_DIR": "{{ .Virtenv }}"
