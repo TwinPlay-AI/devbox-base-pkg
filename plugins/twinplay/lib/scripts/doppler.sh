@@ -18,30 +18,27 @@ set_password() {
 
   echo "[INFO] Download Doppler config ${_arg_config} from ${_arg_project} project"
 
-  doppler secrets download --no-file --format env -p "${_arg_project}" -c "${_arg_config}" >> ${ENV_DOPPLER_FILENAME}.tmp
-
   echo "# Project: ${_arg_project} (${_arg_config})" >> ${ENV_DOPPLER_FILENAME}
 
-  while IFS= read -r line
-  do
-    local _key
-    _key=$(echo "${line}" | cut -d'=' -f1)
+  # One variable per entry, readable both by `source` (.activate) and by
+  # docker compose `env_file`: export KEY="value", with \ " $ ` escaped and
+  # real newlines kept (multi-line secrets, e.g. a JSON). Reading the env
+  # format line by line broke multi-line values, and `cut -d'=' -f2` cut
+  # every value containing "=" (base64 keys, URLs with a query string).
+  doppler secrets download --no-file --format json -p "${_arg_project}" -c "${_arg_config}" \
+    | python3 -c '
+import json
+import sys
 
-    local _value
-    _value=$(echo "${line}" | cut -d'=' -f2)
-
-    if [[ -z "${_key}" ]]; then
-      continue
-    fi
-
-    if [[ "${_key}" == "DOPPLER_"* ]]; then
-      continue
-    fi
-
-    echo "export ${_key}=${_value}" >> ${ENV_DOPPLER_FILENAME}
-  done < ${ENV_DOPPLER_FILENAME}.tmp
-
-  rm ${ENV_DOPPLER_FILENAME}.tmp
+for key, value in json.load(sys.stdin).items():
+    if key.startswith("DOPPLER_"):
+        continue
+    if "`" in value:
+        print(f"[WARN] {key}: docker compose keeps the backslash before a backtick", file=sys.stderr)
+    for char, escaped in (("\\", "\\\\"), ("\"", "\\\""), ("$", "\\$"), ("`", "\\`")):
+        value = value.replace(char, escaped)
+    print(f"export {key}=\"{value}\"")
+' >> ${ENV_DOPPLER_FILENAME}
 }
 
 main() {
